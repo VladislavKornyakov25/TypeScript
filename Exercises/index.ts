@@ -86,10 +86,15 @@ function logValue(x: string | Date): void {
 const port3000 : number = 3000;
 const port3001 : number = 3001;
 
-function startServer(
+const serverConfig: {protocol:'http' | 'https'; port: 3000 | 3001} = {
+	protocol: 'https',
+	port: 3001
+}
+
+const startServer: (protocol: 'http' | 'https', port: 3000 | 3001) => string = (
 	protocol: 'http' | 'https', 
 	port: 3000 | 3001
-): 'Server started' {	
+): 'Server started' => {	
 
 	if (port === port3000 || port === port3001) {
 		console.log(`Server started on ${protocol}://server:${port}`);	
@@ -100,13 +105,15 @@ function startServer(
 	
 	return 'Server started';
 }
-startServer('https', 3000);
+startServer(serverConfig.protocol, serverConfig.port);
 
+type AnimationTimingFunction = 'ease' | 'ease-out' | 'ease-in';
+type AnimationID = string | number;
 
 function createAnimation(
-	id: string | number, 
+	id: AnimationID, 
 	animName: string, 
-	timingFunc: 'ease' | 'ease-out' | 'ease-in' = 'ease',
+	timingFunc: AnimationTimingFunction = 'ease',
 	duration: number,
 	iterCount: 'infinite' | number
 ): void {
