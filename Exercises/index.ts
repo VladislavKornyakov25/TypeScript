@@ -83,45 +83,66 @@ function logValue(x: string | Date): void {
 	}
 }
 
-const port3000 : number = 3000;
-const port3001 : number = 3001;
+// type Config = {
+// 	protocol:'http' | 'https'; 
+// 	port: 3000 | 3001
+// };
 
-const serverConfig: {protocol:'http' | 'https'; port: 3000 | 3001} = {
-	protocol: 'https',
-	port: 3001
+interface Config {
+	protocol:'http' | 'https'; 
+	port: 3000 | 3001;
+	log: (msg: string) => void
 }
 
-const startServer: (protocol: 'http' | 'https', port: 3000 | 3001) => string = (
+
+// type Role = {
+// 	role: string
+// };
+
+interface Role {
+	role: string
+}
+
+interface ConfigWithRole extends Config, Role {}
+// type ConfigWithRole = Config & Role;
+
+const serverConfig: ConfigWithRole = {
+	protocol: 'https',
+	port: 3001,
+	role: 'Admin',
+	log: (msg: string): void => console.log(msg)
+		
+};
+
+// const backupConfig: ConfigWithRole = {
+// 	protocol: 'http',
+// 	port: 3000,
+// 	role: 'sysadmin'
+// }
+
+type StartFunction = (
 	protocol: 'http' | 'https', 
-	port: 3000 | 3001
+	port: 3000 | 3001, 
+	log: (msg: string) => void
+) => string; 
+
+const startServer: StartFunction = (
+	protocol: 'http' | 'https', 
+	port: 3000 | 3001,
+	log: (msg: string) => void
 ): 'Server started' => {	
-
-	if (port === port3000 || port === port3001) {
-		console.log(`Server started on ${protocol}://server:${port}`);	
-	} else {
-		console.error('Invalid port');		
-	}
-
-	
+	log(`Server started on ${protocol}://server:${port}`);
 	return 'Server started';
 }
-startServer(serverConfig.protocol, serverConfig.port);
 
-type AnimationTimingFunction = 'ease' | 'ease-out' | 'ease-in';
-type AnimationID = string | number;
+startServer(serverConfig.protocol, serverConfig.port, serverConfig.log);
 
-function createAnimation(
-	id: AnimationID, 
-	animName: string, 
-	timingFunc: AnimationTimingFunction = 'ease',
-	duration: number,
-	iterCount: 'infinite' | number
-): void {
-	const elem = document.querySelector(`#${id}`) as HTMLElement;
-	if (elem) {
-		console.log(`${animName} ${timingFunc} ${duration} ${iterCount}`);		
-		elem.style.animation = `${animName} ${timingFunc} ${duration} ${iterCount}`;
-	}	
+interface Styles {
+	[key: string]: string
 }
 
-createAnimation('id', 'fade', 'ease', 5, 'infinite');
+const styles: Styles = {
+	position: 'absolut',
+	top: '20px',
+	left: '50px'
+}
