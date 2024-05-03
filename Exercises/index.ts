@@ -1,8 +1,3 @@
-const isBirtdayData: boolean = true;
-let ageData: number  = 40;
-const userNameData: string = 'John';
-
-
 const userData = {
 	isBirtdayData:  true,
 	ageData: 40,
@@ -10,7 +5,9 @@ const userData = {
 	messages: {
 		error: 'Error'
 	}
-}
+};
+
+const userDataTuple: [boolean, number, string] = [true, 40, 'John'];
 
 const createError = (msg: string) => {
     throw new Error(msg)
@@ -40,3 +37,84 @@ const report = departments
 
 const [first] = report;
 console.log(first);
+
+const message: string | number = 6;
+const messages: string[] | number[] = ['a', 'b'];
+
+// function printMsg (msg: string | number): void {
+// 	if (typeof msg === 'string' || typeof msg === 'number') {
+// 		console.log(msg.toString());
+// 	} else {
+// 		console.log(msg);	
+// 	}
+// }
+
+function printMsg (msg: string[] | number | boolean): void {
+	if (Array.isArray(msg)) {
+		msg.forEach((m) => console.log(m));
+	} else if (typeof msg === 'number') {
+		console.log(msg.toFixed());		
+	} else {
+		console.log(msg);		
+	}
+	
+}
+
+printMsg(45);
+const printReadings = (a: number | string, b: number | boolean): void => {
+	if (a === b) {
+		console.log(a, b);		
+	} 
+}
+
+const checkReadings = (readings: {system: number} | {user: number}): void => {
+	if ('system' in readings) {
+		console.log(readings.system);		
+	} else {
+		console.log(readings.user);		
+	}
+}
+
+function logValue(x: string | Date): void {
+	if (x instanceof Date) {
+		console.log(x.getDate());		
+	} else {
+		console.log(x.toLowerCase());		
+	}
+}
+
+const port3000 : number = 3000;
+const port3001 : number = 3001;
+
+function startServer(
+	protocol: 'http' | 'https', 
+	port: 3000 | 3001
+): 'Server started' {	
+
+	if (port === port3000 || port === port3001) {
+		console.log(`Server started on ${protocol}://server:${port}`);	
+	} else {
+		console.error('Invalid port');		
+	}
+
+	
+	return 'Server started';
+}
+startServer('https', 3000);
+
+
+function createAnimation(
+	id: string | number, 
+	animName: string, 
+	timingFunc: 'ease' | 'ease-out' | 'ease-in' = 'ease',
+	duration: number,
+	iterCount: 'infinite' | number
+): void {
+	const elem = document.querySelector(`#${id}`) as HTMLElement;
+	if (elem) {
+		console.log(`${animName} ${timingFunc} ${duration} ${iterCount}`);		
+		elem.style.animation = `${animName} ${timingFunc} ${duration} ${iterCount}`;
+	}	
+}
+
+createAnimation('id', 'fade', 'ease', 5, 'infinite');
