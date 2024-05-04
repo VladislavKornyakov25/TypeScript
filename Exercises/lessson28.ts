@@ -1,5 +1,5 @@
 interface User {
-    login: string;
+    readonly login: string;
     password: string;
     age: number;
     address?: string; //optional fieled
@@ -16,9 +16,17 @@ const user: User = {
     age: 30
 }
 
+const userFrezze: Readonly<User> = {// свойство ридонли применяется ко всем свойствам объекта
+    login: 'first!',
+    password: 'asdf',
+    age: 30
+} // свойство ридонли применяется ко всем свойствам объекта
 const dbName = '11234';
 
 function sendUserData(obj: User, db?: string): void {
-    console.log(obj.parents?.mother, db?.toLowerCase());
-    
+    console.log(obj.parents?.mother, db?.toLowerCase());    
 }
+
+const basicPorts: readonly number[] = [3000, 3001, 5555];
+basicPorts[0] = 5;
+
