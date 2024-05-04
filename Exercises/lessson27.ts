@@ -11,8 +11,6 @@ const userDataNew = "{'isBirdthdayData' : true, 'ageData': 18, 'userNameData': '
 
 const userObj: UserData = JSON.parse(userDataNew);
 
-console.log(userObj.smt);
-
 let isOkay = true;
 
 let movement: boolean | string = false;
