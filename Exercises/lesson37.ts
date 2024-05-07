@@ -19,34 +19,65 @@ function isNumber(n: unknown): n is number {
 }
 
 interface ICar {
+    name: 'car';
     engine: string;
-    wheels: {
-        number: number,
-        type: string
-    }
+    wheels: number;
 }
 
 interface IShip {
+    name: 'ship';
     engine: string;
     sail: string;
 }
 
-function repairVehicle(vehicle: ICar | IShip) {
-    if (isCar(vehicle)) {
-        vehicle.wheels;
-    } else if (isShip(vehicle)) {
-        vehicle.sail;
-    } else {
-        vehicle
-    }
+interface IAirplanne {
+    name: 'airplane';
+    engine: string;
+    wings: string;
 }
 
-function isCar(car: ICar | IShip): car is ICar {
-    //return 'wheels' in car;
-    return (car as ICar).wheels.number != undefined;
+interface ISuperAirplane {
+    name: 'smth';
+    engine: string;
+    wings: string;
+}
+type TVehicle = ICar | IShip | IAirplanne | ISuperAirplane;
+
+function isCar(car: TVehicle): car is ICar {
+    return 'wheels' in car;    
 }
 
-function isShip(ship: ICar | IShip): ship is IShip {
-    //return 'wheels' in car;
+function isShip(ship: TVehicle): ship is IShip {    
     return 'sail' in ship;
+}
+
+function repairVehicle(vehicle: TVehicle) {
+    // if (isCar(vehicle)) {
+    //     vehicle.wheels;
+    // } else if (isShip(vehicle)) {
+    //     vehicle.sail;
+    // } else {
+    //     vehicle.wings;
+    // }
+    switch (vehicle.name) {
+        case 'car':
+            console.log(vehicle.wheels);
+            break;
+        case 'ship':
+            console.log(vehicle.sail);
+            break;
+        case 'airplane':
+            console.log(vehicle.wings);
+            break;
+        case 'smth':
+            console.log(vehicle.wings);
+            break;            
+        default:
+            const smth: never = vehicle;
+            console.log('OOOUUUPPPS');
+            
+            
+            
+            
+    }
 }
